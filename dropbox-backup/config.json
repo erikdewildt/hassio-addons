@@ -1,0 +1,25 @@
+{
+  "name": "Dropbox Backup",
+  "version": "0.0.1",
+  "slug": "dropbox_backup",
+  "description": "Synchronise your Hass.io backups to Dropbox",
+  "url": "https://github.com/erikdewildt/hassio-addons/dropbox-backup",
+  "startup": "before",
+  "stdin": true,
+  "hassio_api": true,
+  "hassio_role": "manager",
+  "boot": "auto",
+  "map": ["backup", "share"],
+  "options": {
+    "oauth_access_token": "<YOUR_ACCESS_TOKEN>",
+    "remote_path": "",
+    "number_to_keep_local": 7,
+    "number_to_keep_remote": 7
+  },
+  "schema": {
+    "oauth_access_token": "str",
+    "remote_path": "str",
+    "number_to_keep_local": "int(0,)?",
+    "number_to_keep_remote": "int(0,)?"
+  }
+}
