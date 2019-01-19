@@ -23,4 +23,4 @@ Sync your Hassio snapshots to Dropbox. Options to set how many snapshots should 
 
 [third-party-addons]: https://home-assistant.io/hassio/installing_third_party_addons/
 [dropbox-backup]: https://github.com/erik.de.wildt/hassio-addons/dropbox-backup
-[dropbox-backup-doc]: https://github.com/erik.de.wildt/hassio-addons/dropbox-backup/README.md
+[dropbox-backup-doc]: https://github.com/erikdewildt/hassio-addons/blob/master/dropbox-backup/README.md
