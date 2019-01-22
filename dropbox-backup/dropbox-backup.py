@@ -8,7 +8,7 @@ import dropbox
 import requests
 
 logger = logging.getLogger('dropbox_backup')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 log_console = logging.StreamHandler()
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)-8s - %(message)s')
 log_console.setFormatter(formatter)
@@ -44,7 +44,29 @@ class DropboxAPI:
         allocated_space = int(space_usage.allocation.get_individual().allocated / 10 ** 6)
         percentage_used = int((100 * used_space) / allocated_space)
         logger.info(f'DropBox usage: {used_space} Mb / {allocated_space} Mb (Usage: {percentage_used}%)')
-
+        
+    def get_total_backup_size(self, path):
+        """Get the total backup size."""
+        files = self.list_files(path=path)
+        return sum(item['size'] for item in files)
+        
+        
+    def check_space_available(self, required_space, max_allowed_usage_percentage, path):
+        """Check if space is available."""
+        space_usage = self.dbx.users_get_space_usage()
+        available = space_usage.allocation.get_individual().allocated - space_usage.used
+        max_allowed_usage = space_usage.allocation.get_individual().allocated * (max_allowed_usage_percentage / 100)
+        
+        if required_space <= available:
+            logger.debug('Required space for upload is available.')
+            if self.get_total_backup_size(path=path) + required_space > max_allowed_usage:
+                logger.debug('Backups would be using more then allowed usage.')
+                return False
+            else:    
+                return True
+        logger.debug('Required space for upload is not available.')
+        return False
+        
     def upload(self, destination_path, source_path):
         """
         Upload a file to DropBox.
@@ -53,9 +75,10 @@ class DropboxAPI:
         :param source_path: The path to the source file.
         """
         result = None
+        progress = 0
         destination_path = os.path.join(destination_path, source_path.split('/')[-1])
         file_size = os.path.getsize(source_path)
-
+            
         try:
             if os.path.exists(source_path) and file_size > 0:
                 with open(source_path, 'rb') as file:
@@ -74,8 +97,10 @@ class DropboxAPI:
                             else:
                                 self.dbx.files_upload_session_append_v2(file.read(self.CHUNK_SIZE), cursor)
                                 cursor.offset = file.tell()
-                                progress = (file.tell() * 100) / file_size
-                                logger.info(f'Uploading `{file.name}`, progress: {progress:.0f} %')
+                                current_progress = (file.tell() * 100) / file_size
+                                if current_progress >= progress + 10:
+                                    progress = current_progress
+                                    logger.info(f'Uploading `{file.name}`, progress: {progress:.0f} %')
 
         except (dropbox.exceptions.HttpError, dropbox.exceptions.ApiError) as error:
             logger.error(f'Error while uploading `{destination_path}` to DropBox.')
@@ -139,9 +164,17 @@ class DropboxAPI:
             if len(files_to_remove) > 0:
                 logger.info(f'Keeping last {number_to_keep} remote backups will remove {len(files_to_remove)} files.')
             for file in files_to_remove:
-                self.delete(file['path'])
+                self.delete(path=file['path'])
         else:
             logger.info(f'Keeping last {number_to_keep} remote backups, no need to remove any.')
+            
+    def delete_last(self, path):
+        """Delete the last backup."""
+        files = self.list_files(path=path)
+        last_file = files[-1:][0]
+        last_file_name = last_file['name']
+        logger.info(f'Deleting oldest backup {last_file_name} to free up space.')
+        self.delete(path=last_file['path'])
 
 
 class DropboxBackup:
@@ -158,6 +191,9 @@ class DropboxBackup:
             with open('/data/options.json') as options_file:
                 try:
                     self.options = json.loads(options_file.read())
+                    if self.options.get('debug'):
+                        logger.setLevel(logging.DEBUG)
+                        logger.debug('Debug logging enabled.')
                 except JSONDecodeError as error:
                     logger.warning('Could not parse options due to error.')
                     logger.debug(f'Error: {error}')
@@ -223,8 +259,17 @@ class DropboxBackup:
 
             logger.info(f'Need to sync {len(files_to_upload)} file(s).')
 
-            for file in files_to_upload:
+            # Handle upload (oldest first)
+            for file in sorted(files_to_upload, key=lambda file: os.path.getmtime(os.path.join(self.BACKUP_PATH,
+                                                                                               file))):
                 source_path = os.path.join(self.BACKUP_PATH, file)
+                
+                # If space is not available or usage would not be > max_usage, delete the last backups
+                while not self.dropbox.check_space_available(
+                    required_space=os.path.getsize(source_path), 
+                    max_allowed_usage_percentage=self.options.get('max_use_dropbox_percentage', 100),
+                    path=self.options['remote_path']):
+                    self.dropbox.delete_last(path=self.options['remote_path'])
                 self.dropbox.upload(destination_path=self.options['remote_path'], source_path=source_path)
 
             self.dropbox.keep_last(path=self.options['remote_path'].rstrip('/'),

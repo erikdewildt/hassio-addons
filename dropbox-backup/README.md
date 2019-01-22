@@ -18,7 +18,8 @@
         "oauth_access_token": "<YOUR_ACCESS_TOKEN>",
         "remote_path": "/hassio-backups/",
         "number_to_keep_local": 7,
-        "number_to_keep_remote": 7
+        "number_to_keep_remote": 7,
+        "debug": false
      }
     ```
 
@@ -28,7 +29,11 @@
 |remote_path|Yes|The target directory in Dropbox where you want to upload the backups files.| 
 |number_to_keep_local|Yes|Number of files to keep locally|
 |number_to_keep_remote|Yes|Number of files to keep on Dropbox|
+|max_use_dropbox_percentage|No|Limit the dropbox usage. (Tip: set the `number_to_keep_remote` to a large number to store as much backups as possible)|
+|debug|No|Enable or disable debugging|
 
+Please make sure that the amount of files on DropBox is larger then the amount of local snapshots. If this is not 
+the case the addon will keep trying to sync the older snapshots to dropbox. 
 
 ### Creating a Dropbox Access Token
 
