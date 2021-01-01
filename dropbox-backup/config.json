@@ -1,7 +1,8 @@
 {
   "name": "Dropbox Backup",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "slug": "dropbox_backup",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "description": "Synchronise your Hass.io backups to Dropbox",
   "url": "https://github.com/erikdewildt/hassio-addons/dropbox-backup",
   "startup": "before",
