@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.4 - 2021-02-13
+
+* Fix `Add-on config 'startup' with 'before' is deprecated.` warning.
+
 ## 0.0.3 - 2021-01-01
 
 * Fix build issue with 'arch' key missing in config.
