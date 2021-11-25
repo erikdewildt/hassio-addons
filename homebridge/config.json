@@ -1,6 +1,6 @@
 {
   "name": "HomeBridge",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "slug": "homebridge",
   "description": "HomeBrige Add-On",
   "arch": [
@@ -16,6 +16,7 @@
     "8581/tcp": 8581,
     "53997/tcp": 53997
   },
+  "host_network": true,
   "boot": "auto",
   "ingress": true,
   "ingress_port": 8581,
