@@ -13,11 +13,11 @@
   "url": "https://github.com/erikdewildt/hassio-addons/homebridge",
   "startup": "application",
   "ports": {
-    "8581/tcp": 8581
+    "8581/tcp": null
   },
   "boot": "auto",
   "ingress": true,
-  "ingress_port": 8581,
+  "ingress_port": 0,
   "panel_icon": "mdi:apple",
   "panel_title": "HomeBridge",
   "options": {
