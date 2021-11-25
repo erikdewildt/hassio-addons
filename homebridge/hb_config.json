@@ -1,0 +1,20 @@
+{
+  "bridge": {
+    "name": "Homebridge 31B8",
+    "username": "0E:2D:17:4A:31:B8",
+    "port": 53997,
+    "pin": "031-45-154"
+  },
+  "accessories": [],
+  "platforms": [
+    {
+      "name": "Config",
+      "port": 8581,
+      "platform": "config",
+      "log": {
+        "method": "file",
+        "path": "/var/log/homebridge.log"
+      }
+    }
+  ]
+}

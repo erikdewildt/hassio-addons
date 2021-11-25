@@ -1,0 +1,31 @@
+{
+  "name": "HomeBridge",
+  "version": "dev",
+  "slug": "homebridge",
+  "description": "HomeBrige Add-On",
+  "arch": [
+    "armhf",
+    "armv7",
+    "aarch64",
+    "amd64",
+    "i386"
+  ],
+  "url": "https://github.com/erikdewildt/hassio-addons/homebridge",
+  "startup": "application",
+  "ports": {
+    "8581/tcp": 8581
+  },
+  "boot": "auto",
+  "ingress": true,
+  "ingress_port": 8581,
+  "panel_icon": "mdi:apple",
+  "panel_title": "HomeBridge",
+  "options": {
+    "pin": "031-45-154"
+  },
+  "schema": {
+    "pin": "str"
+  },
+  "watchdog": "http://[HOST]:[PORT:8581]"
+}
+
