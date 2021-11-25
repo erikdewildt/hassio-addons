@@ -7,7 +7,7 @@ RUN apk update && \
     apk upgrade && \
     apk add --no-cache curl bash nodejs gcc g++ make python3 net-tools npm ffmpeg
 
-RUN npm install -g --unsafe-perm homebridge homebridge-config-ui-x
+RUN npm install -g --unsafe-perm ffmpeg-for-homebridge homebridge homebridge-config-ui-x
 
 COPY ./hb_config.json /root/.homebridge/config.json
 COPY start.sh /usr/local/bin
