@@ -18,6 +18,7 @@
   "boot": "auto",
   "ingress": true,
   "ingress_port": 0,
+  "ingress_stream": true,
   "panel_icon": "mdi:apple",
   "panel_title": "HomeBridge",
   "options": {
