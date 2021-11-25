@@ -14,6 +14,6 @@ COPY start.sh /usr/local/bin
 
 RUN chmod a+x /usr/local/bin/start.sh
 
-EXPOSE 8581
+EXPOSE 8581 53997
 
 CMD /usr/local/bin/start.sh

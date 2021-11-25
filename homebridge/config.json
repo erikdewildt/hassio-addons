@@ -1,6 +1,6 @@
 {
   "name": "HomeBridge",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "slug": "homebridge",
   "description": "HomeBrige Add-On",
   "arch": [
@@ -13,7 +13,8 @@
   "url": "https://github.com/erikdewildt/hassio-addons/homebridge",
   "startup": "application",
   "ports": {
-    "8581/tcp": 8581
+    "8581/tcp": 8581,
+    "53997/tcp": 53997
   },
   "boot": "auto",
   "ingress": true,
