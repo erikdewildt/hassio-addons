@@ -5,7 +5,7 @@ ENV LANG C.UTF-8
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache curl bash nodejs gcc g++ make python3 net-tools npm
+    apk add --no-cache curl bash nodejs gcc g++ make python3 net-tools npm ffmpeg
 
 RUN npm install -g --unsafe-perm homebridge homebridge-config-ui-x
 
