@@ -10,7 +10,7 @@ RUN apk update && \
 RUN npm install -g --unsafe-perm ffmpeg-for-homebridge homebridge homebridge-config-ui-x
 
 # Fix paths for HomeAssistant Ingress
-RUN sed -i 's#<base href="/">#<base href="./">#' /data/lib/node_modules/homebridge-config-ui-x/public/index.html
+RUN sed -i 's#<base href="/">#<base href="./">#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html
 
 COPY ./hb_config.json /root/.homebridge/config.json
 COPY start.sh /usr/local/bin
