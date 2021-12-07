@@ -1,6 +1,6 @@
 {
   "name": "HomeBridge",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "slug": "homebridge",
   "description": "HomeBrige Add-On",
   "arch": [
@@ -20,7 +20,7 @@
   "boot": "auto",
   "ingress": true,
   "ingress_port": 8581,
-  "ingress_entry": "/",
+  "ingress_entry": "",
   "panel_icon": "mdi:apple",
   "panel_title": "HomeBridge",
   "options": {
