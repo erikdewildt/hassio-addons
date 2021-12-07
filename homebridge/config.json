@@ -1,6 +1,6 @@
 {
   "name": "HomeBridge",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "slug": "homebridge",
   "description": "HomeBrige Add-On",
   "arch": [
@@ -29,7 +29,6 @@
   "schema": {
     "pin": "str"
   },
-  "webui": "http://[HOST]:[PORT:8581]/",
-  "watchdog": "http://[HOST]:[PORT:8581]"
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8581]",
+  "watchdog": "[PROTO:ssl]://[HOST]:[PORT:8581]"
 }
-
