@@ -1,11 +1,12 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
+#ARG BUILD_FROM
+#FROM $BUILD_FROM
+FROM alpine:latest
 
 ENV LANG C.UTF-8
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache curl bash nodejs gcc g++ make python3 net-tools npm ffmpeg
+    apk add --no-cache curl bash nodejs gcc g++ make python3 net-tools npm ffmpeg nginx
 
 RUN npm install -g --unsafe-perm ffmpeg-for-homebridge homebridge homebridge-config-ui-x
 
@@ -17,6 +18,7 @@ RUN npm install -g --unsafe-perm ffmpeg-for-homebridge homebridge homebridge-con
 #    sed -i 's#src="scripts#src="./scripts#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html && \
 #    sed -i 's#href="styles#href="./styles#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html
 
+COPY rootfs /
 COPY ./hb_config.json /root/.homebridge/config.json
 COPY start.sh /usr/local/bin
 

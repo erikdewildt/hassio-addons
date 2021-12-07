@@ -9,7 +9,7 @@
   "platforms": [
     {
       "name": "Config",
-      "port": 8581,
+      "port": 8580,
       "platform": "config",
       "log": {
         "method": "file",

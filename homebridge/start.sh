@@ -12,4 +12,5 @@ fi
 rm -rf /usr/local/lib
 ln -s /data/lib /usr/local/lib
 
-/data/lib/node_modules/homebridge/bin/homebridge -U /data | tee /var/log/homebridge.log
+/data/lib/node_modules/homebridge/bin/homebridge -U /data | tee /var/log/homebridge.log &
+nginx -c /etc/nginx/nginx.conf
