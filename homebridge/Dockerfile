@@ -1,6 +1,5 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
-#FROM alpine:latest
 
 ENV LANG C.UTF-8
 
@@ -18,7 +17,6 @@ RUN sed -i 's#src="runtime-es2015#src="./runtime-es2015#' /usr/local/lib/node_mo
     sed -i 's#src="scripts#src="./scripts#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html && \
     sed -i 's#href="styles#href="./styles#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html
 
-COPY rootfs /
 COPY ./hb_config.json /root/.homebridge/config.json
 COPY start.sh /usr/local/bin
 
