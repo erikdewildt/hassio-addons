@@ -1,6 +1,6 @@
 {
   "name": "HomeBridge",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "slug": "homebridge",
   "description": "HomeBrige Add-On",
   "arch": [
