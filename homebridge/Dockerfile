@@ -10,7 +10,9 @@ RUN apk update && \
 RUN npm install -g --unsafe-perm ffmpeg-for-homebridge homebridge homebridge-config-ui-x
 
 # Fix base href for HomeAssistant Ingress
-RUN sed -i 's#<base href="/">#<base href="/api/hassio_ingress/jr0GbVqkevO6VJMzsod3nD-aLofjDdKJizIS-D5a8DI/" />#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html
+RUN sed -i 's#<base href="/">#<base href="/api/hassio_ingress/jr0GbVqkevO6VJMzsod3nD-aLofjDdKJizIS-D5a8DI/" />#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html && \
+    sed -i 's#${window.location.host}#${window.location.host}${window.location.path}#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/main-es2015.6a0995681999f14fd2d1.js
+
 
 COPY rootfs /
 
