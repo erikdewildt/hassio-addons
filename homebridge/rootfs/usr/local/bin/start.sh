@@ -21,5 +21,4 @@ rm -rf /usr/local/lib
 # Create symlink from /data to /usr/local for persistence.
 ln -s /data/lib /usr/local/lib
 
-/data/lib/node_modules/homebridge/bin/homebridge -U /data | tee /var/log/homebridge.log &
-nginx -c /etc/nginx/nginx.conf
+/data/lib/node_modules/homebridge/bin/homebridge -U /data | tee /var/log/homebridge.log

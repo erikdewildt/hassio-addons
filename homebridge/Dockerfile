@@ -1,5 +1,6 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
+#ARG BUILD_FROM
+#FROM $BUILD_FROM
+FROM alpine:latest
 
 ENV LANG C.UTF-8
 
@@ -9,8 +10,8 @@ RUN apk update && \
 
 RUN npm install -g --unsafe-perm ffmpeg-for-homebridge homebridge homebridge-config-ui-x
 
-## Fix paths for HomeAssistant Ingress
-RUN sed -i 's#<base href="/">#<base href="">#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html
+# Fix base href for HomeAssistant Ingress
+RUN sed -i 's#<base href="/">#<base href=""/>#' /usr/local/lib/node_modules/homebridge-config-ui-x/public/index.html
 
 COPY rootfs /
 
